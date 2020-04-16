@@ -1,0 +1,30 @@
+# TODO parse this file and generate source files in lmr.rcd.catalog
+#     I ain't doin all these by hand
+
+##### Object format #####
+# 0x?? Object name
+#     EFFECT                                      # signifies positionless type if present
+#     PARAM-IDX Param name: EnumName|[MIN..MAX]   # [-32768..32767] if range is omitted
+#         Default: value|EnumItemName             # if omitted and enum type, first item, else 0 if in range, else MIN
+
+
+
+0x00 Pot
+    0 Drop type: DropType
+        Default: Nothing
+    1 Quantity [0..100]
+    2 Flag [-1..2056]
+        Default: -1
+    3 Flag bit [1..128]
+    4 Kind
+        0 Guidance
+        1 Sun
+        19 Last one
+    5 Hit sound: Sfx
+        Default: 35
+    6 Break sound: Sfx
+        Default: sadas
+    7 Land sound: Sfx
+        Default: asdas
+    8 Pitch shift [-500..0]
+

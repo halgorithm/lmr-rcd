@@ -1,0 +1,23 @@
+# * means "any other value"
+
+DropType
+    0 Nothing
+    1 Coins
+    2 Weight
+    3 Shurikens
+    4 Rolling shurikens
+    5 Earth spears
+    6 Flares
+    7 Bombs
+    8 Chakrams
+    9 Caltrops
+    10 Bullets
+    11 Coins or weight      # Only works for enemies
+
+Sfx
+    # TODO
+
+CollisionSomething
+    0 Solid
+    1 OtherThing
+    * Empty
