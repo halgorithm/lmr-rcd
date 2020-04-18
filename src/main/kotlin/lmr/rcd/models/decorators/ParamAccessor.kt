@@ -1,4 +1,4 @@
-package lmr.rcd.util
+package lmr.rcd.models.decorators
 
 import lmr.rcd.models.entity.Entity
 import lmr.rcd.models.entity.ParamSpec

@@ -1,7 +1,7 @@
 package lmr.rcd.catalog.enums
 
-import lmr.rcd.util.ParamChoice
-import lmr.rcd.util.ParamLookup
+import lmr.rcd.models.decorators.ParamChoice
+import lmr.rcd.models.decorators.ParamChoiceCompanion
 
 enum class Sfx(override val value: Short) : ParamChoice {
     GAME_START(0x00),
@@ -174,8 +174,7 @@ enum class Sfx(override val value: Short) : ParamChoice {
     // TODO: time attack sounds?
     UNKNOWN(-1);
 
-    companion object: ParamLookup<Sfx> {
-        private val map = values().associateBy(Sfx::value)
-        @JvmStatic override fun valueOf(value: Short) = map.getOrDefault(value, UNKNOWN)
+    companion object: ParamChoiceCompanion<Sfx>(values(), UNKNOWN) {
+        @JvmStatic override fun valueOf(value: Short) = super.valueOf(value)
     }
 }

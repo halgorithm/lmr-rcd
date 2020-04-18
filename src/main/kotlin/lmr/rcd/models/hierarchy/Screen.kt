@@ -22,6 +22,22 @@ class Screen
             throw IllegalArgumentException("provided exits Array must be of length 4")
     }
 
+    var above: ScreenCoords
+        get() = exits[0]
+        set(value) { exits[0] = value }
+
+    var right: ScreenCoords
+        get() = exits[1]
+        set(value) { exits[1] = value }
+
+    var below: ScreenCoords
+        get() = exits[2]
+        set(value) { exits[2] = value }
+
+    var left: ScreenCoords
+        get() = exits[3]
+        set(value) { exits[3] = value }
+
     // REVIEW: allow Screen references for exits instead of/in addition to ScreenCoords?
 
     // TODO: entity queries

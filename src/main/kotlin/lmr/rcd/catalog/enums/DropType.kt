@@ -1,7 +1,7 @@
 package lmr.rcd.catalog.enums
 
-import lmr.rcd.util.ParamChoice
-import lmr.rcd.util.ParamLookup
+import lmr.rcd.models.decorators.ParamChoice
+import lmr.rcd.models.decorators.ParamChoiceCompanion
 
 enum class DropType(override val value: Short) : ParamChoice {
     NOTHING(0),
@@ -18,8 +18,9 @@ enum class DropType(override val value: Short) : ParamChoice {
     COINS_OR_WEIGHT(11), // Only works for enemies
     INVALID(-1);
 
-    companion object: ParamLookup<DropType> {
-        private val map = values().associateBy(DropType::value)
-        @JvmStatic override fun valueOf(value: Short) = map.getOrDefault(value, INVALID)
+    companion object : ParamChoiceCompanion<DropType>
+        (values(), INVALID)
+    {
+        @JvmStatic override fun valueOf(value: Short) = super.valueOf(value)
     }
 }

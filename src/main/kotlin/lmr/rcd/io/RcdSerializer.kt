@@ -99,7 +99,7 @@ class RcdSerializer {
         stream.writeByte(update.operator.value.toInt())
     }
 
-    private companion object Static {
+    companion object Static {
         @JvmStatic fun serialize(world: World, outputFilePath: Path) =
             RcdSerializer().serializeWorld(world, outputFilePath)
     }

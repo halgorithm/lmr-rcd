@@ -1,7 +1,6 @@
 package lmr.rcd.models.entity
 
 interface Actor : Entity {
-    val impl: ActorImpl
     var pos: Position
 
     fun x() = pos.x

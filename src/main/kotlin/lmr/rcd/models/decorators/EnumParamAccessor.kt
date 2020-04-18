@@ -1,4 +1,4 @@
-package lmr.rcd.util
+package lmr.rcd.models.decorators
 
 import lmr.rcd.models.entity.Entity
 import lmr.rcd.models.entity.ParamSpec
@@ -6,7 +6,7 @@ import kotlin.reflect.KProperty
 
 class EnumParamAccessor<T : ParamChoice>(
     private val paramSpec: ParamSpec,
-    private val lookup: ParamLookup<T>
+    private val lookup: ParamChoiceCompanion<T>
 ) {
 
     operator fun getValue(entity: Entity, property: KProperty<*>): T {

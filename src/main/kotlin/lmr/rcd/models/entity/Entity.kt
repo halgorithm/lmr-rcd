@@ -17,8 +17,10 @@ interface Entity {
     fun getParam(paramSpec: ParamSpec): Short = params[paramSpec.idx]
 
     fun setParam(paramSpec: ParamSpec, value: Short) {
-        if (value !in paramSpec.range)
-            throw IllegalArgumentException("must be in range ${paramSpec.range}")
+        for (range in paramSpec.validValueRanges) {
+            if (value !in range)
+                throw IllegalArgumentException("$value is not a valid value for ${paramSpec.name} (must be in the set ${paramSpec.validValueRanges})")
+        }
 
         params[paramSpec.idx] = value
     }

@@ -6,8 +6,5 @@ class ActorImpl
         override var pos: Position = Position()
     )
 : EntityImpl(data), Actor {
-
-    override val impl = this
-
     override fun copy(): ActorImpl = ActorImpl(data.copy(), pos.copy())
 }

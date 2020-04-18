@@ -12,7 +12,7 @@ class RcdParser {
     private lateinit var buffer: ByteBuffer
 
     @JvmOverloads @Throws(IOException::class)
-    fun parseFile(rcdScriptPath: Path, worldScreenCounts: List<List<Short>> = vanillaScreenCounts): World {
+    fun parseFile(rcdScriptPath: Path, worldScreenCounts: List<List<Byte>> = vanillaScreenCounts): World {
         val fileBytes = Files.readAllBytes(rcdScriptPath)
         buffer = ByteBuffer.wrap(fileBytes).order(ByteOrder.BIG_ENDIAN)
 
@@ -26,7 +26,7 @@ class RcdParser {
         return World(zones)
     }
 
-    private fun parseZone(zoneScreenCounts: List<Short>): Zone {
+    private fun parseZone(zoneScreenCounts: List<Byte>): Zone {
         val internalNameLength = buffer.get().toInt()
         val effectsCount = buffer.short.toInt()
         val name = parseString(internalNameLength)
@@ -42,11 +42,11 @@ class RcdParser {
         return Zone(name, scenes, effects)
     }
 
-    private fun parseScene(screenCount: Short): Scene {
+    private fun parseScene(screensCount: Byte): Scene {
         val effectsCount = buffer.short.toInt()
         val effects = List(effectsCount) { parseEffect() }
 
-        val screens = MutableList(screenCount.toInt()) { i ->
+        val screens = MutableList(screensCount.toInt()) { i ->
             log("screen $i", 2)
             parseScreen()
         }
@@ -138,11 +138,11 @@ class RcdParser {
         return strBytes.toString(Charsets.UTF_16)
     }
 
-    private companion object Static {
+    companion object Static {
         val vanillaScreenCounts = generateVanillaScreenCounts()
 
         @JvmStatic @JvmOverloads @Throws(IOException::class)
-        fun parse(rcdScriptPath: Path, worldScreenCounts: List<List<Short>> = vanillaScreenCounts) =
+        fun parse(rcdScriptPath: Path, worldScreenCounts: List<List<Byte>> = vanillaScreenCounts) =
             RcdParser().parseFile(rcdScriptPath, worldScreenCounts)
 
         fun log(msg: String, depth: Int) {
@@ -150,10 +150,10 @@ class RcdParser {
 //            println(indentedMsg)
         }
 
-        fun generateVanillaScreenCounts(): List<List<Short>> {
-            fun zeros(range: IntRange): Array<Short> = Array((range.last - range.first) + 1) { 0.toShort() }
+        fun generateVanillaScreenCounts(): List<List<Byte>> {
+            fun zeros(range: IntRange): Array<Byte> = Array<Byte>((range.last - range.first) + 1) { 0 }
 
-            return listOf<List<Short>>(
+            return listOf<List<Byte>>(
                 listOf(2,2,2,2,3,1,2,2,2,2, *zeros(10..38)), // 0: Guidance
                 listOf(3,2,2,1,3,3,2,2,2,2,4,2, *zeros(12..22)), // 1: Surface
                 listOf(2,2,2,1,1,3,2,3,3,1, *zeros(10..19)), // 2: Mausoleum
@@ -179,7 +179,7 @@ class RcdParser {
                 listOf(3,2,2,1,3,3,2,2,2,2,4,2, *zeros(12..22)), // 22: Night Surface
                 listOf(1,2,2,1,2,2,2,1,2,2,2,1,2,1,2,2,1,1,2,1,1,1,2, *zeros(23..45)), // 23: Hell Temple 1
                 listOf(2,1,2, *zeros(3..4)), // 24: Hell Temple 2,
-                listOf(5,5,5,5,0) // 25: Lava Pit // ?
+                listOf(5,5,5,5,0) // 25: Lava Pit
             )
         }
 

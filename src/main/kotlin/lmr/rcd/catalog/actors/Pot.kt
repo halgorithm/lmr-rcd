@@ -3,43 +3,38 @@ package lmr.rcd.catalog.actors
 import lmr.rcd.models.entity.Actor
 import lmr.rcd.catalog.enums.DropType
 import lmr.rcd.catalog.enums.Sfx
+import lmr.rcd.models.decorators.*
 import lmr.rcd.models.entity.ParamSpec
 import lmr.rcd.models.entity.ActorImpl
-import lmr.rcd.models.entity.RcdObjectData
-import lmr.rcd.util.*
 
-// TODO: `pot: Pot = GameObjectConvert.convert<Pot>(go)` (except worse because of type erasure? ugh)
+// TODO: `pot: Pot = EntityConvert.convert<Pot>(go)` (except worse because of type erasure? ugh)
 class Pot
     @JvmOverloads constructor(
-        actorImpl: ActorImpl = generateActorImpl()
-    ) : Actor by actorImpl {
+        override val impl: ActorImpl = generateDefaultImpl()
+    ) : ActorDecorator, Actor by impl {
 
     enum class Param(
-        override val idx: Int, override val range: IntRange, override val default: Short
+        override val idx: Int, override val validValueRanges: Array<IntRange>, override val defaultValue: Short
     ) : ParamSpec {
-        DROP_TYPE(0, 0..DropType.values().size, DropType.NOTHING.value),
-        QUANTITY(1, 0..100, 0),
-        FLAG(2, -1..2056, -1),
-        FLAG_BIT(3, 1..128, 1),
-        KIND(4, 0..19, 0),
-        HIT_SOUND(5, 105..105, 105),
-        BREAK_SOUND(6, 35..100, 35),
-        LAND_SOUND(7, 17..17, 17),
-        PITCH_SHIFT(8, -500..0, 0);
-
-        internal companion object Static {
-            @JvmStatic fun generateDefaults(): MutableList<Short> =
-                values().map { it.default }.toMutableList()
-        }
+        DROP_TYPE(0, DropType.valueRanges, DropType.NOTHING.value),
+        QUANTITY(1, arrayOf(0..100), 0),
+        FLAG(2, arrayOf(-1..2056), -1),
+        FLAG_BIT(3, arrayOf(1..128), 1),
+        KIND(4, arrayOf(0..19), 0), // TODO: Kind.valueRanges and Kind.WHATEVER_DEFAULT.value
+        HIT_SOUND(5, Sfx.valueRanges, 105),
+        BREAK_SOUND(6, Sfx.valueRanges, 35),
+        LAND_SOUND(7, Sfx.valueRanges, 17),
+        PITCH_SHIFT(8, arrayOf(-500..0), 0);
     }
 
     enum class Kind(override val value: Short) : ParamChoice {
         // Don't know what they are yet
         INVALID(-1);
 
-        internal companion object Static: ParamLookup<Kind> {
-            private val map = values().associateBy(Kind::value)
-            @JvmStatic override fun valueOf(value: Short) = map.getOrDefault(value, INVALID)
+        companion object : ParamChoiceCompanion<Kind>(
+            values(), INVALID
+        ) {
+            @JvmStatic override fun valueOf(value: Short) = super.valueOf(value)
         }
     }
 
@@ -55,15 +50,12 @@ class Pot
 
     override fun copy(): Pot = wrap(impl.copy())
 
-    internal companion object Static: EntityInfo {
+    // EntityInfo<Pot>(0x00, Param.defaultParams)
+    companion object Static : ActorDecoratorCompanion<Pot, Param>
+        (typeId = 0x00, paramSpecs = Param.values())
+    {
         const val TYPE_ID: Short = 0x00
-        override val typeId = TYPE_ID
 
-        @JvmStatic fun wrap(actor: Actor): Pot = Pot(actor.impl)
-
-        @JvmStatic fun generateActorImpl(): ActorImpl =
-            ActorImpl(
-                RcdObjectData(typeId, Param.generateDefaults())
-            )
+        @JvmStatic override fun wrap(impl: ActorImpl): Pot = Pot(impl)
     }
 }
