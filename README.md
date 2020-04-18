@@ -7,7 +7,7 @@ Latest version: still WIP
 1. Call `RcdParser.parse(Path rcdScriptPath)` to get a `World` tree of your .rcd file's data.
     * This method assumes that your .rcd file has an identical Zone-Scene-Screen hierarchy to the vanilla game.
         If it doesn't, you must pass a second argument `List<List<Byte>> worldScreenCounts` to indicate the number of screens within each scene within each zone.
-        The [lmr-msd](https://github.com/halgorithm/lmr-msd) library's `Stage.generateScreetCounts()` method can generate screen counts for each .msd.
+        The [lmr-msd](https://github.com/halgorithm/lmr-msd) library's `Stage.generateSceneScreenCounts()` method can generate screen counts for each .msd.
 
 2. Edit your world tree's actors and effects.
     * `Actor` refers to a positioned screen object and `Effect` refers to a positionless behavioral object. `Entity` is the generic term for either.
