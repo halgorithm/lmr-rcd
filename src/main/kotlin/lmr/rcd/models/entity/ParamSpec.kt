@@ -3,14 +3,14 @@ package lmr.rcd.models.entity
 interface ParamSpec {
     val name: String
     val idx: Int
-    val validValueRanges: Array<IntRange>
+    val validValueRanges: List<IntRange>
     val defaultValue: Short
 
     companion object {
-        fun <T : ParamSpec> generateDefaultParams(specs: Array<T>): Array<Short> {
+        fun <T : ParamSpec> generateDefaultParams(specs: Array<T>): List<Short> {
             val paramsLength = specs.maxBy { it.idx }!!.idx
 
-            val res = Array<Short>(paramsLength) { 0 }
+            val res = MutableList<Short>(paramsLength) { 0 }
             specs.forEach { res[it.idx] = it.defaultValue }
 
             return res

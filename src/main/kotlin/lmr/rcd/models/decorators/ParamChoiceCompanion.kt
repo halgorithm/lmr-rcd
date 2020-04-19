@@ -11,7 +11,7 @@ open class ParamChoiceCompanion<T : ParamChoice>
     override fun valueOf(value: Short) = map.getOrDefault(value, unknownItem)
 
     companion object {
-        fun calcValueRanges(values: List<Short>): Array<IntRange> {
+        fun calcValueRanges(values: List<Short>): List<IntRange> {
             val sortedValues = values.sorted()
             val res = mutableListOf<IntRange>()
 
@@ -30,7 +30,7 @@ open class ParamChoiceCompanion<T : ParamChoice>
 
             if (prevValue == nextRangeStart) res.add(prevValue..prevValue)
 
-            return res.toTypedArray()
+            return res
         }
     }
 }

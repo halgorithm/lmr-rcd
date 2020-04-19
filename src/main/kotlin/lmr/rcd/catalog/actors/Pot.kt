@@ -14,17 +14,19 @@ class Pot
     ) : ActorDecorator, Actor by impl {
 
     enum class Param(
-        override val idx: Int, override val validValueRanges: Array<IntRange>, override val defaultValue: Short
+        override val idx: Int,
+        override val defaultValue: Short,
+        override val validValueRanges: List<IntRange> = listOf(Short.MIN_VALUE..Short.MAX_VALUE)
     ) : ParamSpec {
-        DROP_TYPE(0, DropType.valueRanges, DropType.NOTHING.value),
-        QUANTITY(1, arrayOf(0..100), 0),
-        FLAG(2, arrayOf(-1..2056), -1),
-        FLAG_BIT(3, arrayOf(1..128), 1),
-        KIND(4, arrayOf(0..19), 0), // TODO: Kind.valueRanges and Kind.WHATEVER_DEFAULT.value
-        HIT_SOUND(5, Sfx.valueRanges, 105),
-        BREAK_SOUND(6, Sfx.valueRanges, 35),
-        LAND_SOUND(7, Sfx.valueRanges, 17),
-        PITCH_SHIFT(8, arrayOf(-500..0), 0);
+        DROP_TYPE(0, DropType.NOTHING.value, DropType.valueRanges),
+        QUANTITY(1, 0, listOf(0..100)),
+        FLAG(2, -1, listOf(-1..2056)),
+        FLAG_BIT(3, 1, listOf(1..128)),
+        KIND(4, 0, listOf(0..19)), // TODO: Kind.valueRanges and Kind.WHATEVER_DEFAULT.value
+        HIT_SOUND(5, 105, Sfx.valueRanges),
+        BREAK_SOUND(6, 35, Sfx.valueRanges),
+        LAND_SOUND(7, 17, Sfx.valueRanges),
+        PITCH_SHIFT(8, 0, listOf(-500..0));
     }
 
     enum class Kind(override val value: Short) : ParamChoice {
@@ -32,21 +34,21 @@ class Pot
         INVALID(-1);
 
         companion object : ParamChoiceCompanion<Kind>(
-            values(), INVALID
+            items = values(), unknownItem = INVALID
         ) {
             @JvmStatic override fun valueOf(value: Short) = super.valueOf(value)
         }
     }
 
     var dropType by EnumParamAccessor(Param.DROP_TYPE, DropType)
-    var quantity by ParamAccessor(Param.QUANTITY)
-    var flag by ParamAccessor(Param.FLAG)
-    var flagBit by ParamAccessor(Param.FLAG_BIT)
+    var quantity by NumberParamAccessor(Param.QUANTITY)
+    var flag by NumberParamAccessor(Param.FLAG)
+    var flagBit by NumberParamAccessor(Param.FLAG_BIT)
     var kind by EnumParamAccessor(Param.KIND, Kind)
     var hitSound by EnumParamAccessor(Param.HIT_SOUND, Sfx)
     var breakSound by EnumParamAccessor(Param.BREAK_SOUND, Sfx)
     var landSound by EnumParamAccessor(Param.LAND_SOUND, Sfx)
-    var pitchShift by ParamAccessor(Param.PITCH_SHIFT)
+    var pitchShift by NumberParamAccessor(Param.PITCH_SHIFT)
 
     override fun copy(): Pot = wrap(impl.copy())
 

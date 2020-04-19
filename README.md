@@ -11,8 +11,8 @@ Latest version: still WIP
 
 2. Edit your world tree's actors and effects.
     * `Actor` refers to a positioned screen object and `Effect` refers to a positionless behavioral object. `Entity` is the generic term for either.
-    * Any entity can be wrapped in an `EntityDecorator` subclass that matches its type id, e.g. `Pot.wrap(my0x00Actor)`.
-        These decorators allow you to edit objects in a strongly-typed and highly-readable way, e.g. `pot.setHitSound(Sfx.SNAKE_HISS)`. 
+    * (Coming soon) Every entity has an associated decorator class that can wrap them with additional editing functionality e.g. `pot = Pot.wrap(myActor)`.
+        These decorators allow you to edit objects in a readable, strongly-typed way and validated way, e.g. `pot.setHitSound(Sfx.SNAKE_HISS)`.
     * `Zone`, `Scene` and `Screen` instances all have query-building methods (TODO: document once implemented) for efficiently fetching and filtering objects from the world.
         Queries can return decorated with `.ofType(decoratorClass: Class<Decorator>)`.
     * You can attach/detach objects at each level of the world with `addEffect(myEffect)` and `removeEffect(myEffect)`, and for screens also `addActor(myActor)` and `removeActor(myActor)`
