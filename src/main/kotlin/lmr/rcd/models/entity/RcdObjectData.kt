@@ -9,7 +9,6 @@ data class RcdObjectData
     )
 {
     companion object Static {
-        @JvmStatic fun toTypeIdStr(typeId: Short): String =
-            Integer.toHexString(typeId.toInt())
+        @JvmStatic fun toTypeIdStr(typeId: Short): String = "%02x".format(typeId)
     }
 }

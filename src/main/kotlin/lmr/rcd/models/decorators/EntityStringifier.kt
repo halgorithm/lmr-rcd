@@ -1,6 +1,7 @@
 package lmr.rcd.models.decorators
 
 import lmr.rcd.models.entity.*
+import java.lang.Integer.max
 
 class EntityStringifier {
     companion object Static {
@@ -12,24 +13,17 @@ class EntityStringifier {
 
         fun <P: ParamSpec> stringifyBase(entity: Entity, typeName: String, expectedTypeId: Short, paramSpecs: Array<P>, pos: Position? = null): String {
             // TODO: print flag names wherever flags appear
-            // TODO: make param values more readable for enum properties
 
-            val typeIdStr = RcdObjectData.toTypeIdStr(entity.typeId)
-            val name = if (entity.typeId == expectedTypeId) typeName else "WRONG TYPE ID for $typeName"
-            val header = "${typeIdStr} $name (${entity._id})"
-            val posText = if (pos == null) "EFFECT" else "${pos.x}, ${pos.y}"
+            val typeIdStr = RcdObjectData.toTypeIdStr(expectedTypeId)
+            var typeHeader = "$typeIdStr|$typeName${if (pos != null) " (${pos.x}, ${pos.y})" else ""}"
+            if (entity.typeId != expectedTypeId)
+                typeHeader += "\n  WARNING: WRONG ID ${RcdObjectData.toTypeIdStr(entity.typeId)}"
             val testsContents = entity.tests.joinToString("\n") { it.toTerseString() }.ifEmpty { "none" }
             val updatesContents = entity.updates.joinToString("\n") { it.toTerseString() }.ifEmpty { "none" }
-            val paramsContents = paramSpecs.joinToString("\n") {
-                val valueStr =
-                    if (it.idx < entity.params.size) ": ${entity.getParam(it)}"
-                    else " IS MISSING!"
-                "${it.idx} ${it.name}${valueStr}"
-            }
+            val paramsContents = stringifyParams(entity.params, paramSpecs)
 
             return """
-$header
-  $posText
+$typeHeader
   Tests
 ${testsContents.prependIndent("    ")}
   Updates
@@ -37,6 +31,29 @@ ${updatesContents.prependIndent("    ")}
   Params
 ${paramsContents.prependIndent("    ")}
             """.trimIndent()
+        }
+
+        private fun <P: ParamSpec> stringifyParams(params: List<Short>, paramSpecs: Array<P>): String {
+            // TODO: make param values more readable for enum properties
+            val contentsSize = max(params.size, paramSpecs.last().idx + 1)
+
+            var specI = 0
+            return MutableList(contentsSize) { i ->
+                val paramSpec = paramSpecs.getOrNull(specI)
+                val paramValue = params.getOrNull(i)
+
+                val paramName =
+                    if (paramSpec?.idx != i) {
+                        "UNKNOWN"
+                    } else {
+                        specI += 1
+                        paramSpec.name
+                    }
+
+                val content = "$paramName${if (paramValue == null) " IS MISSING!" else ": $paramValue"}"
+
+                "$i $content"
+            }.joinToString("\n")
         }
     }
 }

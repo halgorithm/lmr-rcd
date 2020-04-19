@@ -1,5 +1,7 @@
 package lmr.rcd.models.entity
 
+import lmr.rcd.models.Flag
+
 data class Test
     @JvmOverloads constructor(
         var flag: Short,
@@ -8,5 +10,5 @@ data class Test
     )
 {
     fun toTerseString(): String =
-        "0x${Integer.toHexString(flag.toInt())} ${operator.name} $value"
+        "${Flag.toFlagString(flag)} ${operator.name} $value"
 }

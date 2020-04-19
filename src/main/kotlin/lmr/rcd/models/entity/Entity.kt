@@ -6,10 +6,7 @@ abstract class Entity
     override val _id = generateId() // REVIEW: does this id get cached?
     override var parent: Any? = null
 
-    override var typeId
-        get() = data.typeId
-        set(value) { data.typeId = value }
-
+    override val typeId get() = data.typeId
     override val params get() = data.params
     override val tests get() = data.tests
     override val updates get() = data.updates

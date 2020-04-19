@@ -59,6 +59,7 @@ class Pot
     {
         const val TYPE_ID: Short = 0x00
 
+        // FIXME: reject actor if typeId mismatch
         @JvmStatic override fun wrap(actor: Actor) = Pot(actor)
     }
 }

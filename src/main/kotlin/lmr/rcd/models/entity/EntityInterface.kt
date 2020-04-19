@@ -6,7 +6,7 @@ interface EntityInterface {
 
     var data: RcdObjectData
 
-    var typeId: Short
+    val typeId: Short
     val params: MutableList<Short>
     val tests: MutableList<Test>
     val updates: MutableList<Update>

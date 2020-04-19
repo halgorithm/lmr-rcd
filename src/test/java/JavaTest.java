@@ -1,8 +1,7 @@
 import lmr.rcd.catalog.actors.Fog;
+import lmr.rcd.catalog.actors.Pot;
 import lmr.rcd.io.RcdParser;
-import lmr.rcd.models.entity.Actor;
-import lmr.rcd.models.entity.Effect;
-import lmr.rcd.models.entity.RcdObjectData;
+import lmr.rcd.models.entity.*;
 import lmr.rcd.models.hierarchy.World;
 
 import java.io.IOException;
@@ -21,11 +20,19 @@ public class JavaTest {
         var effect = new Effect(obj);
         var fog = Fog.wrap(effect);
         var fog2 = new Fog();
+        var pot = new Pot();
+        var potTests = pot.getTests();
+        potTests.add(new Test((short) 1234, (byte) 1, TestOperator.BIT_AND_EQ_0));
+        potTests.add(new Test((short) 1, (byte) 1, TestOperator.EQ));
+        potTests.add(new Test((short) 2, (byte) 1, TestOperator.LT));
+        var potUpdates = pot.getUpdates();
+        potUpdates.add(new Update((short) 2, (byte) 1, UpdateOperator.ADD));
 
-        System.out.println("FOG 1");
         System.out.println(fog.toDebugString());
-        System.out.println("\nFOG 2");
+        System.out.println();
         System.out.println(fog2.toDebugString());
+        System.out.println();
+        System.out.println(pot.toDebugString());
 
 //        World world = RcdParser.parse(inputScriptPath);
 //
