@@ -80,7 +80,7 @@ class RcdParser {
         val testsCount = operationsLengthsBits.get(4)
         val paramsCount = buffer.get().toInt()
 
-        var logHeader = "entity 0x${Integer.toHexString(typeId.toInt())}"
+        var logHeader = "entity ${RcdObjectData.toTypeIdStr(typeId)}"
 
         var pos: Position? = null
         if (hasPosition) {

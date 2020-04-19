@@ -17,22 +17,27 @@ public class JavaTest {
     public static void main(String args[]) throws IOException {
         var inputScriptPath = buildScriptPath(inputGameDir);
 
-        var obj = new RcdObjectData((short) 0x92);
-        var actor = new Effect(obj);
-        var fog = Fog.wrap(actor);
+        var obj = new RcdObjectData((short) 0x05);
+        var effect = new Effect(obj);
+        var fog = Fog.wrap(effect);
+        var fog2 = new Fog();
 
-        World world = null;
-        world = RcdParser.parse(inputScriptPath);
+        System.out.println("FOG 1");
+        System.out.println(fog.toDebugString());
+        System.out.println("\nFOG 2");
+        System.out.println(fog2.toDebugString());
 
-        for (var zone : world.getZones()) {
-            for (var scene : zone.getScenes()) {
-                var screens = scene.getScreens();
-                for (int i = 0; i < screens.size() / 2; i++) {
-                    var first = screens.get(i);
-
-                }
-            }
-        }
+//        World world = RcdParser.parse(inputScriptPath);
+//
+//        for (var zone : world.getZones()) {
+//            for (var scene : zone.getScenes()) {
+//                var screens = scene.getScreens();
+//                for (int i = 0; i < screens.size() / 2; i++) {
+//                    var first = screens.get(i);
+//
+//                }
+//            }
+//        }
 //        TODO: edits
 
 //        RcdSerializer.serialize(world, buildScriptPath(outputGameDir));

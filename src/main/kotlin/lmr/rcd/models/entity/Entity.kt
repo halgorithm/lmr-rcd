@@ -17,7 +17,7 @@ abstract class Entity
     override fun _attachTo(obj: Any) { parent = obj }
     override fun _detach() { parent = null }
 
-    private companion object Static {
+    private companion object {
         private var nextId = 0;
         fun generateId(): Int = nextId++
     }

@@ -8,5 +8,5 @@ data class Update
     )
 {
     fun toTerseString(): String =
-        "Update(0x${Integer.toHexString(flag.toInt())} $operator $value)"
+        "0x${Integer.toHexString(flag.toInt())} ${operator.name} $value"
 }

@@ -7,9 +7,18 @@ abstract class EntityDecoratorCompanion<P : ParamSpec>
     (val typeId: Short, paramSpecs: Array<P>)
 {
     protected val defaultParams = {
-        if (paramSpecs.size != paramSpecs.distinctBy { it.idx }.size)
-            throw IllegalArgumentException("param specs indices are not unique")
-
+        validateParamSpecs(paramSpecs)
         ParamSpec.generateDefaultParams(paramSpecs)
     }.invoke()
+
+    private fun validateParamSpecs(paramSpecs: Array<P>) {
+        var prevIdx = paramSpecs.first().idx
+        for (i in 1 until paramSpecs.size) {
+            val curIdx = paramSpecs[i].idx
+            if (curIdx <= prevIdx)
+                throw IllegalArgumentException("param specs indices are not in increasing order starting at $curIdx")
+
+            prevIdx = curIdx
+        }
+    }
 }
