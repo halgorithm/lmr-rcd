@@ -1,29 +1,24 @@
 package lmr.rcd.models.entity
 
-interface Entity {
-    val _id: Int
-    val parent: Any?
+abstract class Entity
+    constructor(override var data: RcdObjectData)
+: EntityInterface {
+    override val _id = generateId() // REVIEW: does this id get cached?
+    override var parent: Any? = null
 
-    var data: RcdObjectData
+    override var typeId
+        get() = data.typeId
+        set(value) { data.typeId = value }
 
-    var typeId: Short
-    val params: MutableList<Short>
-    val tests: MutableList<Test>
-    val updates: MutableList<Update>
+    override val params get() = data.params
+    override val tests get() = data.tests
+    override val updates get() = data.updates
 
-    fun _attachTo(obj: Any)
-    fun _detach()
+    override fun _attachTo(obj: Any) { parent = obj }
+    override fun _detach() { parent = null }
 
-    fun getParam(paramSpec: ParamSpec): Short = params[paramSpec.idx]
-
-    fun setParam(paramSpec: ParamSpec, value: Short) {
-        for (range in paramSpec.validValueRanges) {
-            if (value !in range)
-                throw IllegalArgumentException("$value is not a valid value for ${paramSpec.name} (must be in the set ${paramSpec.validValueRanges})")
-        }
-
-        params[paramSpec.idx] = value
+    private companion object Static {
+        private var nextId = 0;
+        fun generateId(): Int = nextId++
     }
-
-    fun copy(): Entity
 }

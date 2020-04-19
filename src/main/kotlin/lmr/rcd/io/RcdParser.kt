@@ -117,12 +117,12 @@ class RcdParser {
 
     private fun parseEffect(): Effect {
         val data = parseEntityData(false).first
-        return EffectImpl(data)
+        return Effect(data)
     }
 
     private fun parseActor(): Actor {
         val (data, pos) = parseEntityData(true)
-        return ActorImpl(data, pos!!)
+        return Actor(data, pos!!)
     }
 
     private fun parseExit() = ScreenCoords(

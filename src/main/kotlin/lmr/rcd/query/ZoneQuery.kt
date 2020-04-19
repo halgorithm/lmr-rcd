@@ -1,8 +1,8 @@
 package lmr.rcd.query
 
-import lmr.rcd.models.entity.Entity
+import lmr.rcd.models.entity.EntityInterface
 
-class ZoneQuery<T: Entity> {
+class ZoneQuery<T: EntityInterface> {
     // QUERY MODEL
     // each of these returns an EntityQuery<W> that has fun fetch(): List<W> (W can be Actor)
     // they are sugar for e.g. EntityQuery<Pot>(zoneIds: List<Short?>, sceneIds: List<Short?>, screenIds: List<Short?>, wrappers: List<W?>)

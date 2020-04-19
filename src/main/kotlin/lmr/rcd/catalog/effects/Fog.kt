@@ -1,16 +1,14 @@
 package lmr.rcd.catalog.actors
 
 import lmr.rcd.catalog.enums.BlendMode
-import lmr.rcd.catalog.enums.DropType
-import lmr.rcd.catalog.enums.Sfx
 import lmr.rcd.models.decorators.*
 import lmr.rcd.models.entity.*
 
 class Fog
     @JvmOverloads constructor(
-        override val impl: EffectImpl = generateDefaultImpl()
+        override val effect: Effect = generateDefaultEffect()
     )
-: EffectDecorator, Effect by impl {
+: EffectDecorator, EffectInterface by effect {
 
     enum class Param(
         override val idx: Int,
@@ -63,13 +61,13 @@ class Fog
     val srcBlue by NumberParamAccessor(Param.SRC_BLUE)
     val lemezaSpotlight by BooleanParamAccessor(Param.LEMEZA_SPOTLIGHT)
 
-    override fun copy(): Fog = Fog.wrap(impl.copy())
+    override fun copy(): Fog = Fog.wrap(effect.copy())
 
     companion object Static: EffectDecoratorCompanion<Fog, Param>(
         typeId = 0x92, paramSpecs = Param.values()
     ) {
-        const val TYPE_ID: Short = 0x00
+        const val TYPE_ID: Short = 0x92
 
-        @JvmStatic override fun wrap(impl: EffectImpl): Fog = Fog(impl)
+        @JvmStatic override fun wrap(effect: Effect): Fog = Fog(effect)
     }
 }

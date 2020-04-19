@@ -1,9 +1,6 @@
 package lmr.rcd.io
 
-import lmr.rcd.models.entity.Actor
-import lmr.rcd.models.entity.Entity
-import lmr.rcd.models.entity.Test
-import lmr.rcd.models.entity.Update
+import lmr.rcd.models.entity.*
 import lmr.rcd.models.hierarchy.*
 import java.io.DataOutputStream
 import java.io.FileOutputStream
@@ -64,7 +61,7 @@ class RcdSerializer {
         stream.writeByte(exit.screenIdx.toInt())
     }
 
-    private fun serializeEntity(entity: Entity) {
+    private fun serializeEntity(entity: EntityInterface) {
         stream.writeShort(entity.typeId.toInt())
 
         val testsCount = entity.tests.size

@@ -5,14 +5,15 @@ Latest version: still WIP
 
 ### Getting started
 1. Call `RcdParser.parse(Path rcdScriptPath)` to get a `World` tree of your .rcd file's data.
-    * This method assumes that your .rcd file has an identical Zone-Scene-Screen hierarchy to the vanilla game.
+    * This method assumes that your script.rcd has identical Zone-Scene-Screen hierarchy counts to the vanilla game.
         If it doesn't, you must pass a second argument `List<List<Byte>> worldScreenCounts` to indicate the number of screens within each scene within each zone.
         The [lmr-msd](https://github.com/halgorithm/lmr-msd) library's `Stage.generateSceneScreenCounts()` method can generate screen counts for each .msd.
 
 2. Edit your world tree's actors and effects.
-    * `Actor` refers to a positioned screen object and `Effect` refers to a positionless behavioral object. `Entity` is the generic term for either.
+    * `Actor` refers to a positioned screen object and `Effect` refers to a positionless behavioral object.
+    `Entity` is the generic term for either.
     * (Coming soon) Every entity has an associated decorator class that can wrap them with additional editing functionality e.g. `pot = Pot.wrap(myActor)`.
-        These decorators allow you to edit objects in a readable, strongly-typed way and validated way, e.g. `pot.setHitSound(Sfx.SNAKE_HISS)`.
+        These decorators allow you to edit objects in a readable, strongly-typed and validated way, e.g. `pot.setHitSound(Sfx.SNAKE_HISS)`.
         * (Coming soon) If you find that the param validation logic for a decorator is incorrect, you can bypass it by
             simply calling `actor.getParams()` to directly access the underlying `List<Short>` params without any validations.
             However, in most cases it's be better to simply fix the validations on the decorator class to be correct.

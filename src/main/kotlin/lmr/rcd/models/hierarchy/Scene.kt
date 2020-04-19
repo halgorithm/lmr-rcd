@@ -1,15 +1,15 @@
 package lmr.rcd.models.hierarchy
 
-import lmr.rcd.models.entity.Effect
+import lmr.rcd.models.entity.EffectInterface
+import lmr.rcd.models.hierarchy.storage.EffectStorageInterface
 import lmr.rcd.models.hierarchy.storage.EffectStorage
-import lmr.rcd.models.hierarchy.storage.EffectStorageImpl
 
 class Scene
     @JvmOverloads constructor(
         val screens: MutableList<Screen> = mutableListOf(),
-        effects: List<Effect> = listOf()
+        effects: List<EffectInterface> = listOf()
     )
-: EffectStorage by EffectStorageImpl(effects) {
+: EffectStorageInterface by EffectStorage(effects) {
     // TODO: query methods
     //     getParentZone()
     //     actors(screenPredicate: Screen -> Boolean, wrapper: W): List<W>

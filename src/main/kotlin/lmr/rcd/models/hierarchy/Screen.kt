@@ -1,21 +1,21 @@
 package lmr.rcd.models.hierarchy
 
-import lmr.rcd.models.entity.Actor
-import lmr.rcd.models.entity.Effect
+import lmr.rcd.models.entity.ActorInterface
+import lmr.rcd.models.entity.EffectInterface
+import lmr.rcd.models.hierarchy.storage.ActorStorageInterface
 import lmr.rcd.models.hierarchy.storage.ActorStorage
-import lmr.rcd.models.hierarchy.storage.ActorStorageImpl
+import lmr.rcd.models.hierarchy.storage.EffectStorageInterface
 import lmr.rcd.models.hierarchy.storage.EffectStorage
-import lmr.rcd.models.hierarchy.storage.EffectStorageImpl
 
 class Screen
     @JvmOverloads constructor(
         internal var name: String = "",
-        effects: List<Effect> = listOf(),
-        actors: List<Actor> = listOf(),
+        effects: List<EffectInterface> = listOf(),
+        actors: List<ActorInterface> = listOf(),
         val exits: Array<ScreenCoords> = Array(4) { ScreenCoords() }
     )
-: EffectStorage by EffectStorageImpl(effects),
-    ActorStorage by ActorStorageImpl(actors)
+: EffectStorageInterface by EffectStorage(effects),
+    ActorStorageInterface by ActorStorage(actors)
 {
     init {
         if (exits.size != 4)

@@ -1,9 +1,10 @@
 package lmr.rcd.models.entity
 
-interface Actor : Entity {
-    var pos: Position
-
-    fun x() = pos.x
-    fun y() = pos.y
-    override fun copy(): Actor
+class Actor
+    @JvmOverloads constructor(
+        data: RcdObjectData,
+        override var pos: Position = Position()
+    )
+: Entity(data), ActorInterface {
+    override fun copy(): Actor = Actor(data.copy(), pos.copy())
 }

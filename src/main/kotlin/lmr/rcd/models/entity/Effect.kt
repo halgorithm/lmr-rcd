@@ -1,5 +1,7 @@
 package lmr.rcd.models.entity
 
-interface Effect : Entity {
-    override fun copy(): Effect
+class Effect
+    constructor(data: RcdObjectData)
+: Entity(data), EffectInterface {
+    override fun copy(): Effect = Effect(data.copy())
 }

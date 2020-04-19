@@ -1,17 +1,17 @@
 package lmr.rcd.catalog.actors
 
-import lmr.rcd.models.entity.Actor
+import lmr.rcd.models.entity.ActorInterface
 import lmr.rcd.catalog.enums.DropType
 import lmr.rcd.catalog.enums.Sfx
 import lmr.rcd.models.decorators.*
 import lmr.rcd.models.entity.ParamSpec
-import lmr.rcd.models.entity.ActorImpl
+import lmr.rcd.models.entity.Actor
 
 // TODO: `pot: Pot = EntityConvert.convert<Pot>(go)` (except worse because of type erasure? ugh)
 class Pot
     @JvmOverloads constructor(
-        override val impl: ActorImpl = generateDefaultImpl()
-    ) : ActorDecorator, Actor by impl {
+        override val actor: Actor = generateDefaultActor()
+    ) : ActorDecorator, ActorInterface by actor {
 
     enum class Param(
         override val idx: Int,
@@ -50,7 +50,7 @@ class Pot
     var landSound by EnumParamAccessor(Param.LAND_SOUND, Sfx)
     var pitchShift by NumberParamAccessor(Param.PITCH_SHIFT)
 
-    override fun copy(): Pot = wrap(impl.copy())
+    override fun copy(): Pot = wrap(actor.copy())
 
     // EntityInfo<Pot>(0x00, Param.defaultParams)
     companion object Static : ActorDecoratorCompanion<Pot, Param>
@@ -58,6 +58,6 @@ class Pot
     {
         const val TYPE_ID: Short = 0x00
 
-        @JvmStatic override fun wrap(impl: ActorImpl): Pot = Pot(impl)
+        @JvmStatic override fun wrap(actor: Actor): Pot = Pot(actor)
     }
 }
