@@ -15,7 +15,7 @@ class EntityStringifier {
             // TODO: make param values more readable for enum properties
 
             val typeIdStr = RcdObjectData.toTypeIdStr(entity.typeId)
-            val name = if (entity.typeId == expectedTypeId) typeName else "BAD $typeName"
+            val name = if (entity.typeId == expectedTypeId) typeName else "WRONG TYPE ID for $typeName"
             val header = "${typeIdStr} $name (${entity._id})"
             val posText = if (pos == null) "EFFECT" else "${pos.x}, ${pos.y}"
             val testsContents = entity.tests.joinToString("\n") { it.toTerseString() }.ifEmpty { "none" }
