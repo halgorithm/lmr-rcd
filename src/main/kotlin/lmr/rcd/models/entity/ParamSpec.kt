@@ -8,7 +8,7 @@ interface ParamSpec {
 
     companion object {
         fun <T : ParamSpec> generateDefaultParams(specs: Array<T>): List<Short> {
-            val paramsLength = specs.maxBy { it.idx }!!.idx
+            val paramsLength = specs.maxBy { it.idx }!!.idx + 1
 
             val res = MutableList<Short>(paramsLength) { 0 }
             specs.forEach { res[it.idx] = it.defaultValue }
