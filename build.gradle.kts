@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.github.halgorithm"
-version = "0.1.8-SNAPSHOT"
+version = "0.1.10-SNAPSHOT"
 
 repositories {
     mavenCentral()

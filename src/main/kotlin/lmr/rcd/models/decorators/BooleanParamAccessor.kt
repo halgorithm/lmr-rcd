@@ -14,6 +14,6 @@ class BooleanParamAccessor(
     }
 
     operator fun setValue(entity: EntityInterface, property: KProperty<*>, value: Boolean) {
-        entity.params[paramSpec.idx] = if (value) trueValue else falseValue
+        entity.setParam(paramSpec, if (value) trueValue else falseValue)
     }
 }

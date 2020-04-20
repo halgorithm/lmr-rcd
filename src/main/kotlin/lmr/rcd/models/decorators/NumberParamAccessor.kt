@@ -10,6 +10,6 @@ class NumberParamAccessor(private val paramSpec: ParamSpec) {
     }
 
     operator fun setValue(entity: EntityInterface, property: KProperty<*>, value: Int) {
-        entity.params[paramSpec.idx] = value.toShort()
+        entity.setParam(paramSpec, value.toShort())
     }
 }

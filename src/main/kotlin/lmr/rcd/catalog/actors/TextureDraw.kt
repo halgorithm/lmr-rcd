@@ -20,21 +20,21 @@ class TextureDraw
         GFX_SHEET_Y(3, 0, listOf(0..1024)),
         GFX_SHEET_WIDTH(4, 0),
         GFX_SHEET_HEIGHT(5, 0),
-        ANIMATION_STYLE(6, AnimationStyle.ANIMATE_AT_START.value, AnimationStyle.valueRanges),
+        ANIM_STYLE(6, AnimationStyle.ANIMATE_AT_START.value, AnimationStyle.valueRanges),
         GFX_SHEET_FRAMES_COUNT(7, 1, listOf(1..1024)),
-        PAUSE_INTERVAL(8, 1, listOf(0..Short.MAX_VALUE)),
-        REPEAT_COUNT(9, -1, listOf(-1..Short.MAX_VALUE)),
+        ANIM_PAUSE_INTERVAL(8, 1, listOf(0..Short.MAX_VALUE)),
+        ANIM_REPEAT_COUNT(9, -1, listOf(-1..Short.MAX_VALUE)),
         COLLISION_TYPE_FILL(10, 0, listOf(Byte.MIN_VALUE..Byte.MAX_VALUE)), // TODO: make enum?
         ENTRY_EFFECT(11, EntryEffect.STATIC.value, EntryEffect.valueRanges),
         EXIT_EFFECT(12, ExitEffect.DISAPPEAR_INSTANTLY.value, ExitEffect.valueRanges),
-        CYCLE_COLORS(13, 0, listOf(0..1)),
-        MIN_ALPHA(14, 255, listOf(0..255)), // FIXME: test
-        MAX_ALPHA(15, 255, listOf(0..255)),
-        MIN_RED(16, 255, listOf(0..255)), // FIXME: test
+        PULSE_COLORS(13, 0, listOf(0..1)),
+        ALPHA_PER_FRAME(14, 255, listOf(0..255)),
+        MIN_ALPHA(15, 255, listOf(0..255)),
+        RED_PER_FRAME(16, 255, listOf(0..255)),
         MAX_RED(17, 255, listOf(0..255)),
-        MIN_GREEN(18, 255, listOf(0..255)), // FIXME: test
+        GREEN_PER_FRAME(18, 255, listOf(0..255)),
         MAX_GREEN(19, 255, listOf(0..255)),
-        MIN_BLUE(20, 255, listOf(0..255)), // FIXME: test
+        BLUE_PER_FRAME(20, 255, listOf(0..255)),
         MAX_BLUE(21, 255, listOf(0..255)),
         BLEND_STYLE(22, BlendStyle.NORMAL.value, BlendStyle.valueRanges),
         NOT_0(23, 1, listOf(1..Short.MAX_VALUE))
@@ -69,8 +69,8 @@ class TextureDraw
     }
 
     enum class ExitEffect(override val value: Short) : ParamChoice {
-        NO_ANIMATION(0),
-        FADE(1),
+        STATIC(0),
+        FADE_ON_FAILURE(1),
         DISAPPEAR_INSTANTLY(2),
         SHATTER(3),
         ANIMATE_ON_FAILURE_FIRST_FRAME_ON_SUCCESS(5),
@@ -105,21 +105,21 @@ class TextureDraw
     var gfxSheetY by NumberParamAccessor(Param.GFX_SHEET_Y)
     var gfxSheetWidth by NumberParamAccessor(Param.GFX_SHEET_WIDTH)
     var gfxSheetHeight by NumberParamAccessor(Param.GFX_SHEET_HEIGHT)
-    var animationStyle by EnumParamAccessor(Param.ANIMATION_STYLE, AnimationStyle)
+    var animStyle by EnumParamAccessor(Param.ANIM_STYLE, AnimationStyle)
     var sheetFramesCount by NumberParamAccessor(Param.GFX_SHEET_FRAMES_COUNT)
-    var pauseInterval by NumberParamAccessor(Param.PAUSE_INTERVAL)
-    var repeatCount by NumberParamAccessor(Param.REPEAT_COUNT)
+    var animPauseInterval by NumberParamAccessor(Param.ANIM_PAUSE_INTERVAL)
+    var animRepeatCount by NumberParamAccessor(Param.ANIM_REPEAT_COUNT)
     var collisionTypeFill by NumberParamAccessor(Param.COLLISION_TYPE_FILL)
     var entryEffect by EnumParamAccessor(Param.ENTRY_EFFECT, EntryEffect)
     var exitEffect by EnumParamAccessor(Param.EXIT_EFFECT, ExitEffect)
-    var cycleColors by BooleanParamAccessor(Param.CYCLE_COLORS)
+    var pulseColors by BooleanParamAccessor(Param.PULSE_COLORS)
+    var alphaPerFrame by NumberParamAccessor(Param.ALPHA_PER_FRAME)
     var minAlpha by NumberParamAccessor(Param.MIN_ALPHA)
-    var maxAlpha by NumberParamAccessor(Param.MAX_ALPHA)
-    var minRed by NumberParamAccessor(Param.MIN_RED)
+    var redPerFrame by NumberParamAccessor(Param.RED_PER_FRAME)
     var maxRed by NumberParamAccessor(Param.MAX_RED)
-    var minGreen by NumberParamAccessor(Param.MIN_GREEN)
+    var greenPerFrame by NumberParamAccessor(Param.GREEN_PER_FRAME)
     var maxGreen by NumberParamAccessor(Param.MAX_GREEN)
-    var minBlue by NumberParamAccessor(Param.MIN_BLUE)
+    var bluePerFrame by NumberParamAccessor(Param.BLUE_PER_FRAME)
     var maxBlue by NumberParamAccessor(Param.MAX_BLUE)
     var blendStyle by EnumParamAccessor(Param.BLEND_STYLE, BlendStyle)
     var not0 by NumberParamAccessor(Param.NOT_0)
