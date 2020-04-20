@@ -19,7 +19,9 @@ public class JavaTest {
         var obj = new RcdObjectData((short) 0x05);
         var effect = new Effect(obj);
         var fog = Fog.wrap(effect);
+
         var fog2 = new Fog();
+
         var pot = new Pot();
         var potTests = pot.getTests();
         potTests.add(new Test((short) 1234, (byte) 1, TestOperator.BIT_AND_EQ_0));
@@ -28,11 +30,18 @@ public class JavaTest {
         var potUpdates = pot.getUpdates();
         potUpdates.add(new Update((short) 2, (byte) 1, UpdateOperator.ADD));
 
+        var badPotParams = new ArrayList<Short>(20);
+        for (int i = 0; i < 20; i++) badPotParams.add((short) (i * 4));
+        var pot2 = new Pot(new Actor(new RcdObjectData((short) 0, badPotParams)));
+
+
         System.out.println(fog.toDebugString());
         System.out.println();
         System.out.println(fog2.toDebugString());
         System.out.println();
         System.out.println(pot.toDebugString());
+        System.out.println();
+        System.out.println(pot2.toDebugString());
 
 //        World world = RcdParser.parse(inputScriptPath);
 //

@@ -35,7 +35,8 @@ ${paramsContents.prependIndent("    ")}
 
         private fun <P: ParamSpec> stringifyParams(params: List<Short>, paramSpecs: Array<P>): String {
             // TODO: make param values more readable for enum properties
-            val contentsSize = max(params.size, paramSpecs.last().idx + 1)
+            val lastKnownIdx = paramSpecs.last().idx
+            val contentsSize = max(params.size, lastKnownIdx + 1)
 
             var specI = 0
             return MutableList(contentsSize) { i ->
@@ -43,8 +44,10 @@ ${paramsContents.prependIndent("    ")}
                 val paramValue = params.getOrNull(i)
 
                 val paramName =
-                    if (paramSpec?.idx != i) {
-                        "UNKNOWN"
+                    if (paramSpec == null)
+                        "EXCESS"
+                    else if (paramSpec.idx != i) {
+                        "UNUSED"
                     } else {
                         specI += 1
                         paramSpec.name

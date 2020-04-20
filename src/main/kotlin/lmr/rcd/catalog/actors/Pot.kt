@@ -53,7 +53,6 @@ class Pot
     override fun toDebugString() = toDebugString(TYPE_ID, Param.values())
     override fun copy(): Pot = wrap(actor.copy())
 
-    // EntityInfo<Pot>(0x00, Param.defaultParams)
     companion object Static : ActorDecoratorCompanion<Pot, Param>
         (typeId = 0x00, paramSpecs = Param.values())
     {
