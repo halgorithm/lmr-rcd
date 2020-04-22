@@ -21,7 +21,9 @@ interface EntityInterface {
         if (validate) {
             for (range in paramSpec.validValueRanges) {
                 if (value !in range)
-                    throw IllegalArgumentException("$value is not a valid value for ${paramSpec.name} (must be in the set ${paramSpec.validValueRanges})")
+                    throw IllegalArgumentException(
+                        "$value is not a valid value for ${paramSpec.name} (must be in the set ${paramSpec.validValueRanges})"
+                    )
             }
         }
 

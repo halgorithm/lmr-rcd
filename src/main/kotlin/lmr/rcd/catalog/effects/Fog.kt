@@ -3,6 +3,8 @@ package lmr.rcd.catalog.actors
 import lmr.rcd.catalog.enums.D3DBlendMode
 import lmr.rcd.models.decorators.*
 import lmr.rcd.models.entity.ParamSpec
+import lmr.rcd.models.entity.ParamSpec.ParamType
+import lmr.rcd.models.entity.ParamSpec.ParamType.*
 import lmr.rcd.models.entity.Effect
 
 class Fog
@@ -14,7 +16,8 @@ class Fog
     enum class Param(
         override val idx: Int,
         override val defaultValue: Short,
-        override val validValueRanges: List<IntRange> = listOf(Short.MIN_VALUE..Short.MAX_VALUE)
+        override val validValueRanges: List<IntRange> = listOf(Short.MIN_VALUE..Short.MAX_VALUE),
+        override val type: ParamType = NUMBER
     ) : ParamSpec {
         MOVE_ANGLE(0, 0, listOf(0..360)),
         SPEED_CONTROL(1, 0, listOf(0..Short.MAX_VALUE)), // Film grain speed = value % 50, fog speed = value / 100 (units?)

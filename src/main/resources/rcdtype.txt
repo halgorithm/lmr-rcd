@@ -10,16 +10,19 @@
 
 
 0x00 Pot
+    Enums
+        Kind
+            0 Guidance
+            1 Sun
+            19 Last one
+
     0 Drop type: DropType
         Default: Nothing
     1 Quantity [0..100]
     2 Flag [-1..2056]
         Default: -1
     3 Flag bit [1..128]
-    4 Kind
-        0 Guidance
-        1 Sun
-        19 Last one
+    4 Kind: Kind
     5 Hit sound: Sfx
         Default: 35
     6 Break sound: Sfx

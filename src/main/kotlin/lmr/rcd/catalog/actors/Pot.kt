@@ -4,6 +4,8 @@ import lmr.rcd.catalog.enums.DropType
 import lmr.rcd.catalog.enums.Sfx
 import lmr.rcd.models.decorators.*
 import lmr.rcd.models.entity.ParamSpec
+import lmr.rcd.models.entity.ParamSpec.ParamType
+import lmr.rcd.models.entity.ParamSpec.ParamType.*
 import lmr.rcd.models.entity.Actor
 
 // TODO: `pot: Pot = EntityConvert.convert<Pot>(go)` (except worse because of type erasure? ugh)
@@ -16,16 +18,17 @@ class Pot
     enum class Param(
         override val idx: Int,
         override val defaultValue: Short,
-        override val validValueRanges: List<IntRange> = listOf(Short.MIN_VALUE..Short.MAX_VALUE)
+        override val validValueRanges: List<IntRange> = listOf(Short.MIN_VALUE..Short.MAX_VALUE),
+        override val type: ParamType = NUMBER
     ) : ParamSpec {
-        DROP_TYPE(0, DropType.NOTHING.value, DropType.valueRanges),
+        DROP_TYPE(0, DropType.NOTHING.value, DropType.valueRanges, ENUM),
         QUANTITY(1, 0, listOf(0..100)),
         FLAG(2, -1, listOf(-1..2056)),
         FLAG_BIT(3, 1, listOf(1..128)),
         KIND(4, 0, listOf(0..19)), // TODO: Kind.valueRanges and Kind.WHATEVER_DEFAULT.value
-        HIT_SOUND(5, 105, Sfx.valueRanges),
-        BREAK_SOUND(6, 35, Sfx.valueRanges),
-        LAND_SOUND(7, 17, Sfx.valueRanges),
+        HIT_SOUND(5, 105, Sfx.valueRanges, ENUM),
+        BREAK_SOUND(6, 35, Sfx.valueRanges, ENUM),
+        LAND_SOUND(7, 17, Sfx.valueRanges, ENUM),
         PITCH_SHIFT(8, 0, listOf(-500..0));
     }
 

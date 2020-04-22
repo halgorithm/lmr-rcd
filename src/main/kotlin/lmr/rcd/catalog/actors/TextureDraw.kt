@@ -3,6 +3,8 @@ package lmr.rcd.catalog.actors
 import lmr.rcd.models.decorators.*
 import lmr.rcd.models.entity.Actor
 import lmr.rcd.models.entity.ParamSpec
+import lmr.rcd.models.entity.ParamSpec.ParamType
+import lmr.rcd.models.entity.ParamSpec.ParamType.*
 
 class TextureDraw
     @JvmOverloads constructor(
@@ -12,7 +14,8 @@ class TextureDraw
     enum class Param(
         override val idx: Int,
         override val defaultValue: Short,
-        override val validValueRanges: List<IntRange> = listOf(Short.MIN_VALUE..Short.MAX_VALUE)
+        override val validValueRanges: List<IntRange> = listOf(Short.MIN_VALUE..Short.MAX_VALUE),
+        override val type: ParamType = NUMBER
     ) : ParamSpec {
         LAYER_IDX(0, 0),
         GFX_SHEET_IDX(1, 0, listOf(0..7)),
@@ -20,14 +23,14 @@ class TextureDraw
         GFX_SHEET_Y(3, 0, listOf(0..1024)),
         GFX_SHEET_WIDTH(4, 0),
         GFX_SHEET_HEIGHT(5, 0),
-        ANIM_STYLE(6, AnimationStyle.ANIMATE_AT_START.value, AnimationStyle.valueRanges),
+        ANIM_STYLE(6, AnimationStyle.ANIMATE_AT_START.value, AnimationStyle.valueRanges, ENUM),
         GFX_SHEET_FRAMES_COUNT(7, 1, listOf(1..1024)),
         ANIM_PAUSE_INTERVAL(8, 1, listOf(0..Short.MAX_VALUE)),
         ANIM_REPEAT_COUNT(9, -1, listOf(-1..Short.MAX_VALUE)),
         COLLISION_TYPE_FILL(10, 0, listOf(Byte.MIN_VALUE..Byte.MAX_VALUE)), // TODO: make enum?
-        ENTRY_EFFECT(11, EntryEffect.STATIC.value, EntryEffect.valueRanges),
-        EXIT_EFFECT(12, ExitEffect.DISAPPEAR_INSTANTLY.value, ExitEffect.valueRanges),
-        PULSE_COLORS(13, 0, listOf(0..1)),
+        ENTRY_EFFECT(11, EntryEffect.STATIC.value, EntryEffect.valueRanges, ENUM),
+        EXIT_EFFECT(12, ExitEffect.DISAPPEAR_INSTANTLY.value, ExitEffect.valueRanges, ENUM),
+        PULSE_COLORS(13, 0, listOf(0..1), type = BOOLEAN),
         ALPHA_PER_FRAME(14, 255, listOf(0..255)),
         MIN_ALPHA(15, 255, listOf(0..255)),
         RED_PER_FRAME(16, 255, listOf(0..255)),
@@ -36,7 +39,7 @@ class TextureDraw
         MAX_GREEN(19, 255, listOf(0..255)),
         BLUE_PER_FRAME(20, 255, listOf(0..255)),
         MAX_BLUE(21, 255, listOf(0..255)),
-        BLEND_STYLE(22, BlendStyle.NORMAL.value, BlendStyle.valueRanges),
+        BLEND_STYLE(22, BlendStyle.NORMAL.value, BlendStyle.valueRanges, ENUM),
         NOT_0(23, 1, listOf(1..Short.MAX_VALUE))
     }
 

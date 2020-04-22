@@ -21,8 +21,7 @@ Latest version: still WIP
             * If you find that the param validation logic for a decorator is incorrect somehow, you can bypass it by
             using `setParam()` like so: `myPot.setParam(Pot.Param.DROP_TYPE, -120, false)` (the last argument skips
             validations). You can also directly access the underlying `List<Short>` of params if you wish.
-            * PRs to fix incorrect validation logic are welcome. The simplest way to do so would be to edit [this rcdtype]
-            file (the format is described [here]) and then run [this task] to regenerate the decorator class files.
+            * Alternatively, PRs to fix incorrect validation logic are welcome (see [Contributing] for details).
     * (Coming soon) `Zone`, `Scene` and `Screen` instances all have query-building methods for efficiently fetching and
         filtering entities. Queries for specific entity types using `.ofType(decoratorClass: Class<Decorator>)` will return
         a list of decorators instead of basic actors.
@@ -31,5 +30,8 @@ Latest version: still WIP
     
 3. Write your `World` back to a file using `RcdSerializer.serialize(World world, Path outputPath)`
 
+### Contributing
+
 ### Documentation
-More coming soon...
+* To fix incorrect decorator logic, please edit [this rcdtype] file (the format is described [here]) and then run
+[this task] (you must have Gradle installed) to regenerate the decorator class files.

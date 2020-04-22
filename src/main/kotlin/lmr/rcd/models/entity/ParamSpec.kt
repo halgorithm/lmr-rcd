@@ -3,8 +3,11 @@ package lmr.rcd.models.entity
 interface ParamSpec {
     val name: String
     val idx: Int
-    val validValueRanges: List<IntRange>
     val defaultValue: Short
+    val validValueRanges: List<IntRange>
+    val type: ParamType
+
+    enum class ParamType { NUMBER, ENUM, BOOLEAN }
 
     companion object {
         fun <T : ParamSpec> generateDefaultParams(specs: Array<T>): List<Short> {
