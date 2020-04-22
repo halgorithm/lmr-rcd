@@ -6,14 +6,27 @@ import kotlin.reflect.KProperty
 
 class BooleanParamAccessor(
     private val paramSpec: ParamSpec,
-    private val trueValue: Short = 1,
-    private val falseValue: Short = 0
+    private val trueValueRanges: List<IntRange> = listOf(1..1),
+    private val falseValueRanges: List<IntRange> = listOf(0..0)
 ) {
-    operator fun getValue(entity: EntityInterface, property: KProperty<*>): Boolean {
-        return entity.params[paramSpec.idx] == trueValue
+    operator fun getValue(entity: EntityInterface, property: KProperty<*>): Boolean? {
+        val value = entity.params[paramSpec.idx]
+
+        for (range in trueValueRanges)
+            if (value in range) return true
+        for (range in falseValueRanges)
+            if (value in range) return false
+        return null
     }
 
-    operator fun setValue(entity: EntityInterface, property: KProperty<*>, value: Boolean) {
-        entity.setParam(paramSpec, if (value) trueValue else falseValue)
+    operator fun setValue(entity: EntityInterface, property: KProperty<*>, value: Boolean?) {
+        if (value == null)
+            throw IllegalArgumentException("value cannot be null")
+
+        val storedValue =
+            if (value) trueValueRanges.first().first
+            else falseValueRanges.first().first
+
+        entity.setParam(paramSpec, storedValue.toShort())
     }
 }
